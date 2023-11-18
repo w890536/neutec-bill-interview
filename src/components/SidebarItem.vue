@@ -59,6 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 .sidebaritem {
+  cursor: pointer;
   &--active {
     background-color: gray;
   }

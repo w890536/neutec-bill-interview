@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     updateIndex(index) {
-      console.log("update index ", index);
+      console.log("update index");
       this.activeIndex = index;
     },
   },
@@ -63,16 +63,20 @@ export default {
   right: 0%;
   top: 0%;
   transition: transform 0.5s;
+  opacity: 0.9;
+  z-index: 3;
   &--active {
+    background-color: green;
     transform: translateX(0);
   }
   &--inactive {
+    background-color: blue;
     transform: translateX(100%);
   }
   &__sidebar {
     background-color: #000;
     float: right;
-    min-width: 150px;
+    width: 150px;
     height: 100%;
     padding: 10px;
   }

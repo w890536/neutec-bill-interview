@@ -1,18 +1,19 @@
 <template>
   <button class="btn" @click="toggleSidebar">Toggle Btn</button>
-  <h1>{{ showSidebar }}</h1>
   <sidebar
     :data="fakeData"
     :showSidebar="showSidebar"
     :toggleSidebar="toggleSidebar"
   ></sidebar>
+  <grid :gridData="gridData"></grid>
 </template>
 
 <script>
+import Grid from "./components/Grid.vue";
 import Sidebar from "./components/Sidebar.vue";
 
 export default {
-  components: { Sidebar },
+  components: { Sidebar, Grid },
   data() {
     return {
       fakeData: [
@@ -129,11 +130,13 @@ export default {
           ],
         },
       ],
+      gridData: [2, 0, 3, 0, 1, 0, 2, 0, 3],
       showSidebar: false,
     };
   },
   methods: {
     toggleSidebar() {
+      console.log("toggleSidebar");
       this.showSidebar = !this.showSidebar;
     },
   },
