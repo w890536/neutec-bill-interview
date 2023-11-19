@@ -17,6 +17,7 @@
         :activePath="activePath.slice(1)"
         style="padding-left: 20px"
         @click.stop="handleSubClick(idx)"
+        :level="level + 1"
       />
     </template>
   </div>
@@ -40,6 +41,10 @@ export default {
     activePath: {
       type: Array,
       default: () => [],
+    },
+    level: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
@@ -65,10 +70,19 @@ export default {
     handleClick() {
       this.$emit("clickIndex", this.index);
       this.activeSubIndex = -1;
+      localStorage.setItem(`level${this.level}`, -1);
     },
     handleSubClick(index) {
       this.activeSubIndex = index;
+      localStorage.setItem(`level${this.level}`, index);
     },
+  },
+  mounted() {
+    if (localStorage.getItem(`level${this.level}`) !== null) {
+      this.activeSubIndex = parseInt(
+        localStorage.getItem(`level${this.level}`)
+      );
+    }
   },
 };
 </script>

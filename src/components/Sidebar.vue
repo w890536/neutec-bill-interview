@@ -21,6 +21,7 @@
         :data="child"
         :key="child.key"
         @clickIndex="updateIndex"
+        :level="0"
       />
     </div>
   </div>
@@ -54,6 +55,8 @@ export default {
   methods: {
     updateIndex(index) {
       this.activeIndex = index;
+      localStorage.setItem("activeIndex", index);
+      console.log("update Index ", index);
     },
     findKeyRecursively(data, targetKey, path = [], result = []) {
       for (let i = 0; i < data.length; i++) {
@@ -80,7 +83,11 @@ export default {
       this.findKeyRecursively(this.data, event.target.value);
     },
   },
-  mounted() {},
+  mounted() {
+    if (localStorage.getItem("activeIndex") !== null) {
+      this.activeIndex = parseInt(localStorage.getItem("activeIndex"));
+    }
+  },
 };
 </script>
 
