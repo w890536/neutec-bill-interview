@@ -8,12 +8,16 @@
     }"
     @click.self="toggleSidebar"
   >
+    <select name="" id="" @change="handleSelect">
+      <recursive-option parent="" :items="data"></recursive-option>
+    </select>
     <!-- sidebar區塊 -->
     <div class="backdrop__sidebar">
       <sidebar-item
         v-for="(child, idx) in data"
         :index="idx"
         :activeIndex="activeIndex"
+        :activePath="activeArray"
         :data="child"
         :key="child.key"
         @clickIndex="updateIndex"
@@ -23,9 +27,10 @@
 </template>
 
 <script>
+import RecursiveOption from "./RecursiveOption.vue";
 import SidebarItem from "./SidebarItem.vue";
 export default {
-  components: { SidebarItem },
+  components: { SidebarItem, RecursiveOption },
   props: {
     data: {
       type: Array,
@@ -37,18 +42,42 @@ export default {
     },
     toggleSidebar: {
       type: Function,
-      default: () => {},
+      default: null,
     },
   },
   data() {
     return {
       activeIndex: -1,
+      activeArray: [],
     };
   },
   methods: {
     updateIndex(index) {
-      console.log("update index");
       this.activeIndex = index;
+    },
+    findKeyRecursively(data, targetKey, path = [], result = []) {
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        const currentPath = [...path, i];
+
+        if (item.key === targetKey) {
+          result = currentPath;
+          this.activeIndex = result.shift();
+          this.activeArray = result;
+        }
+
+        if (item.children && item.children.length > 0) {
+          this.findKeyRecursively(
+            item.children,
+            targetKey,
+            currentPath,
+            result
+          );
+        }
+      }
+    },
+    handleSelect(event) {
+      this.findKeyRecursively(this.data, event.target.value);
     },
   },
   mounted() {},
@@ -72,6 +101,9 @@ export default {
   &--inactive {
     // background-color: blue;
     transform: translateX(100%);
+  }
+  select {
+    margin: 10px;
   }
   &__sidebar {
     background-color: #000;

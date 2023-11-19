@@ -1,4 +1,4 @@
-<template>
+<template>  
   <button class="btn" @click="toggleSidebar">Toggle Btn</button>
   <sidebar
     :data="fakeData"
@@ -136,7 +136,6 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      console.log("toggleSidebar");
       this.showSidebar = !this.showSidebar;
     },
   },

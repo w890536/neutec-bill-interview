@@ -14,6 +14,7 @@
         :data="child"
         :index="idx"
         :activeIndex="activeSubIndex"
+        :activePath="activePath.slice(1)"
         style="padding-left: 20px"
         @click.stop="handleSubClick(idx)"
       />
@@ -36,11 +37,26 @@ export default {
       type: Number,
       default: -1,
     },
+    activePath: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       activeSubIndex: -1,
+      activeArray: [],
     };
+  },
+  watch: {
+    activePath: {
+      handler(newActivePath) {
+        if (newActivePath.length > 0) {
+          this.activeSubIndex = newActivePath[0];
+        }
+      },
+      immediate: true,
+    },
   },
   methods: {
     isActive() {
@@ -48,12 +64,12 @@ export default {
     },
     handleClick() {
       this.$emit("clickIndex", this.index);
+      this.activeSubIndex = -1;
     },
     handleSubClick(index) {
       this.activeSubIndex = index;
     },
   },
-  mounted() {},
 };
 </script>
 
