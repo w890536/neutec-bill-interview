@@ -50,6 +50,7 @@ section {
   margin-top: 200px;
   min-width: 100%;
   column-gap: 10px;
+  overflow: hidden !important;
   .container {
     width: calc(33.33% - 24px);
     position: relative;

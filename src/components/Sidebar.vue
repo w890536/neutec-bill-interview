@@ -66,11 +66,11 @@ export default {
   opacity: 0.9;
   z-index: 3;
   &--active {
-    background-color: green;
+    // background-color: green;
     transform: translateX(0);
   }
   &--inactive {
-    background-color: blue;
+    // background-color: blue;
     transform: translateX(100%);
   }
   &__sidebar {
