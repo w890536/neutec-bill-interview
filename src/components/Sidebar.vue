@@ -56,7 +56,6 @@ export default {
     updateIndex(index) {
       this.activeIndex = index;
       localStorage.setItem("activeIndex", index);
-      console.log("update Index ", index);
     },
     findKeyRecursively(data, targetKey, path = [], result = []) {
       for (let i = 0; i < data.length; i++) {
