@@ -55,6 +55,7 @@ export default {
   methods: {
     updateIndex(index) {
       this.activeIndex = index;
+      localStorage.clear();
       localStorage.setItem("activeIndex", index);
     },
     findKeyRecursively(data, targetKey, path = [], result = []) {
@@ -79,6 +80,7 @@ export default {
       }
     },
     handleSelect(event) {
+      localStorage.clear();
       this.findKeyRecursively(this.data, event.target.value);
     },
   },
