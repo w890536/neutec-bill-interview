@@ -1,28 +1,20 @@
 <template>
-  <template v-for="item in items" :key="item.key">
-    <template v-if="parent === ''">
-      <option :value="item.key">{{item.text}}</option>
-      <RecursiveOption
-        :items="item.children"
-        parent="-"
-        v-if="item.children && item.children.length > 0"
-      />
-    </template>
-    <template v-else>
-      <option :value="item.key">{{`${parent}${item.text}`}}</option>
-      <RecursiveOption
-        :items="item.children"
-        :parent="`${parent}-`"
-        v-if="item.children && item.children.length > 0"
-      />
-    </template>
+  <template v-for="item in data" :key="item.key">
+    <option :value="item.key">
+      {{ parent === "" ? item.text : `${parent}${item.text}` }}
+    </option>
+    <RecursiveOption
+      v-if="item.children && item.children.length > 0"
+      :data="item.children"
+      :parent="`${parent}>`"
+    />
   </template>
 </template>
 
 <script>
 export default {
   props: {
-    items: {
+    data: {
       type: Array,
       default: () => [],
     },

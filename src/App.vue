@@ -130,6 +130,7 @@ export default {
           ],
         },
       ],
+      // 0 一般 // 1 發亮 // 2 球 // 3 發亮且有球
       gridData: [2, 0, 3, 0, 1, 0, 2, 0, 3],
       showSidebar: false,
     };

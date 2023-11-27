@@ -9,7 +9,7 @@
     @click.self="toggleSidebar"
   >
     <select name="" id="" @change="handleSelect">
-      <recursive-option parent="" :items="data"></recursive-option>
+      <recursive-option parent="" :data="data"></recursive-option>
     </select>
     <!-- sidebar區塊 -->
     <div class="backdrop__sidebar">
