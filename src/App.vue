@@ -1,11 +1,22 @@
 <template>
   <button class="btn" @click="toggleSidebar">Toggle Btn</button>
+  <div class="input-area">
+    <label for="x">輸入希望小球移動到x座標: </label>
+    <input v-model="x" name="x" type="number" />
+    <br />
+    <label for="y">輸入希望小球移動到y座標: </label>
+    <input v-model="y" name="y" type="number" />
+    <br />
+    <br />
+    <button @click="startMoving = !startMoving">移動</button>
+  </div>
   <sidebar
     :data="fakeData"
     :showSidebar="showSidebar"
     :toggleSidebar="toggleSidebar"
   ></sidebar>
-  <grid :gridData="gridData"></grid>
+  <grid :startMoving="startMoving" :x="x" :y="y" :gridData="gridData"></grid>
+  <!-- <grid :gridData="gridData"></grid> -->
 </template>
 
 <script>
@@ -16,6 +27,9 @@ export default {
   components: { Sidebar, Grid },
   data() {
     return {
+      x: null,
+      y: null,
+      startMoving: false,
       fakeData: [
         {
           key: "64f",
@@ -144,6 +158,16 @@ export default {
 </script>
 
 <style>
+.input-area {
+  position: absolute;
+  top: 100px;
+  margin: 0 auto;
+  width: 100%;
+}
+input {
+  background-color: #fff;
+  color: black;
+}
 .btn {
   position: absolute;
   top: 10px;
