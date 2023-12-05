@@ -64,7 +64,6 @@ export default {
           this.subActiveIndex = newActivePath[this.level + 1];
         }
       },
-      immediate: true,
     },
   },
   methods: {
