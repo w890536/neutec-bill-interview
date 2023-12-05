@@ -64,9 +64,13 @@ export default {
       console.log("setNewDestination");
       for (let index = 0; index < 9; index++) {
         let element = document.getElementById(`ball${index}`);
-        if (element && this.x && this.y) {
-          // console.log("this.x", this.x);
-          // console.log("this.y", this.y);
+        if (
+          element &&
+          typeof this.x === "number" &&
+          typeof this.y === "number"
+        ) {
+          console.log("this.x", this.x);
+          console.log("this.y", this.y);
           let translateY = this.y - this.initPosition[index].y;
           let translateX = this.x - this.initPosition[index].x;
           this.keyframes[index] = [
@@ -158,9 +162,9 @@ export default {
         }
       }
       &__ball {
-        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        left: 50%;
+        // transform: translate(-50%, -50%);
         width: 30px;
         height: 30px;
         background-color: #a5f12b;
