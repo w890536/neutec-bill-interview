@@ -8,142 +8,27 @@
     <input v-model="y" name="y" type="number" />
     <br />
     <br />
-    <button @click="startMoving = !startMoving">移動</button>
+    <button @click="startMoving">移動</button>
   </div>
-  <sidebar
-    :data="fakeData"
-    :showSidebar="showSidebar"
-    :toggleSidebar="toggleSidebar"
-  ></sidebar>
-  <grid :startMoving="startMoving" :x="x" :y="y" :gridData="gridData"></grid>
-  <!-- <grid :gridData="gridData"></grid> -->
+  <sidebar :showSidebar="showSidebar" :toggleSidebar="toggleSidebar"></sidebar>
+  <nine-square-grid
+    :x="x"
+    :y="y"
+    :gridData="gridData"
+    ref="nine"
+  />
 </template>
 
 <script>
-import Grid from "./components/Grid.vue";
-import Sidebar from "./components/Sidebar.vue";
+import Sidebar from "./components/Sidebar/Sidebar.vue";
+import NineSquareGrid from "./components/NineSquareGrid/NineSquareGrid.vue";
 
 export default {
-  components: { Sidebar, Grid },
+  components: { Sidebar, NineSquareGrid },
   data() {
     return {
       x: null,
       y: null,
-      startMoving: false,
-      fakeData: [
-        {
-          key: "64f",
-          text: "好喝黑糖",
-          children: [
-            {
-              key: "445",
-              text: "黑糖鮮奶",
-              children: [
-                {
-                  key: "37a",
-                  text: "黑糖珍珠鮮奶",
-                },
-                {
-                  key: "feb",
-                  text: "黑糖芋圓鮮奶",
-                },
-                {
-                  key: "59c",
-                  text: "黑糖蒟蒻鮮奶",
-                },
-              ],
-            },
-            {
-              key: "29e",
-              text: "黑糖冬瓜",
-              children: [
-                {
-                  key: "ac3",
-                  text: "黑糖冬瓜牛奶",
-                },
-                {
-                  key: "ca0",
-                  text: "黑糖冬瓜珍珠",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          key: "6c3",
-          text: "茶",
-          children: [
-            {
-              key: "5dc",
-              text: "烏龍綠",
-            },
-            {
-              key: "b5f",
-              text: "綠茶",
-            },
-            {
-              key: "b09",
-              text: "紅茶",
-            },
-            {
-              key: "887",
-              text: "青茶",
-            },
-          ],
-        },
-        {
-          key: "c81",
-          text: "咖啡",
-          children: [
-            {
-              key: "e02",
-              text: "黑咖啡",
-              children: [
-                {
-                  key: "d20",
-                  text: "濃縮咖啡",
-                },
-                {
-                  key: "1f8",
-                  text: "美式咖啡",
-                },
-              ],
-            },
-            {
-              key: "d7a",
-              text: "牛奶咖啡",
-              children: [
-                {
-                  key: "c09",
-                  text: "拿鐵",
-                  children: [
-                    {
-                      key: "db2",
-                      text: "黑糖拿鐵",
-                    },
-                    {
-                      key: "9f6",
-                      text: "榛果拿鐵",
-                    },
-                    {
-                      key: "b61",
-                      text: "香草拿鐵",
-                    },
-                  ],
-                },
-                {
-                  key: "9ac",
-                  text: "卡布奇諾",
-                },
-                {
-                  key: "ce8",
-                  text: "摩卡",
-                },
-              ],
-            },
-          ],
-        },
-      ],
       // 0 一般 // 1 發亮 // 2 球 // 3 發亮且有球
       gridData: [2, 0, 3, 0, 1, 0, 2, 0, 3],
       showSidebar: false,
@@ -153,26 +38,29 @@ export default {
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
     },
+    startMoving() {
+      this.$refs.nine.setNewDestination();
+    },
   },
 };
 </script>
 
-<style>
-.input-area {
-  position: absolute;
-  top: 100px;
-  margin: 0 auto;
-  width: 100%;
-}
-input {
-  background-color: #fff;
-  color: black;
-}
+<style lang="scss" scoped>
 .btn {
   position: absolute;
   top: 10px;
   right: 10px;
   background-color: #fff;
   color: black;
+}
+.input-area {
+  position: absolute;
+  top: 100px;
+  margin: 0 auto;
+  width: 100%;
+  input {
+    background-color: #fff;
+    color: black;
+  }
 }
 </style>

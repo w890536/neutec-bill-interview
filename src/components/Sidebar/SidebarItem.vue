@@ -1,22 +1,23 @@
 <template>
   <div
     class="sidebaritem"
-    @click="handleClick"
     :class="{ 'sidebaritem--active': isActive() }"
+    @click="clearSubIndex"
   >
     <p :style="{ color: isActive() ? 'yellow' : 'white' }">
       {{ data.text }}
     </p>
     <template v-if="isActive()">
       <sidebar-item
+        style="padding-left: 20px"
         v-for="(child, idx) in data.children"
         :key="child.key"
         :data="child"
         :index="idx"
-        :activeIndex="activeSubIndex"
-        :activePath="activePath.slice(1)"
-        style="padding-left: 20px"
-        @click.stop="handleSubClick(idx)"
+        :activeIndex="subActiveIndex"
+        :activePath="activePath"
+        :setActiveKey="setActiveKey"
+        @click.stop="handleSubClick(idx, child.key)"
         :level="level + 1"
       />
     </template>
@@ -26,6 +27,9 @@
 <script>
 export default {
   props: {
+    setActiveKey: {
+      type: Function,
+    },
     data: {
       type: Object,
       default: () => {},
@@ -49,15 +53,15 @@ export default {
   },
   data() {
     return {
-      activeSubIndex: -1,
-      activeArray: [],
+      subActiveIndex: -1,
     };
   },
   watch: {
     activePath: {
       handler(newActivePath) {
+        console.log("activePath changed");
         if (newActivePath.length > 0) {
-          this.activeSubIndex = newActivePath[0];
+          this.subActiveIndex = newActivePath[this.level + 1];
         }
       },
       immediate: true,
@@ -67,22 +71,21 @@ export default {
     isActive() {
       return this.activeIndex === this.index;
     },
-    handleClick() {
-      this.$emit("clickIndex", this.index);
-      this.activeSubIndex = -1;
-      localStorage.setItem(`level${this.level}`, -1);
+    clearSubIndex() {
+      console.log("clearSubIndex");
+      this.subActiveIndex = -1;
     },
-    handleSubClick(index) {
-      this.activeSubIndex = index;
-      localStorage.setItem(`level${this.level}`, index);
-    },
-  },
-  mounted() {
-    if (localStorage.getItem(`level${this.level}`) !== null) {
-      this.activeSubIndex = parseInt(
-        localStorage.getItem(`level${this.level}`)
+    handleSubClick(index, key) {
+      console.log("handleSubClick");
+      this.subActiveIndex = index;
+      this.setActiveKey(key);
+      let newPath = this.activePath;
+      newPath[this.level + 1] = index;
+      localStorage.setItem(
+        "activePath",
+        JSON.stringify(newPath.slice(0, this.level + 2))
       );
-    }
+    },
   },
 };
 </script>
