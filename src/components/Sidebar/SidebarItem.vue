@@ -5,6 +5,7 @@
     @click="clearSubIndex"
   >
     <p :style="{ color: isActive() ? 'yellow' : 'white' }">
+      <!-- {{ data.text }} {{ data.key }} -->
       {{ data.text }}
     </p>
     <template v-if="isActive()">
@@ -59,11 +60,11 @@ export default {
   watch: {
     activePath: {
       handler(newActivePath) {
-        console.log("activePath changed");
         if (newActivePath.length > 0) {
           this.subActiveIndex = newActivePath[this.level + 1];
         }
       },
+      immediate: true,
     },
   },
   methods: {

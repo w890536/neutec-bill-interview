@@ -74,6 +74,7 @@ export default {
     },
     setActiveKey(key) {
       this.activeKey = key;
+      localStorage.setItem("activeKey", key);
     },
     setActivePath(path) {
       this.activePath = path;
@@ -105,12 +106,13 @@ export default {
   },
   mounted() {
     let storagePath = localStorage.getItem("activePath");
-    if (storagePath) {
+    let storageKey = localStorage.getItem("activeKey");
+    if (storagePath && storageKey) {
       console.log("sidebar mounted");
-      let parseData = JSON.parse(storagePath);
-      this.setActiveIndex(parseData[0]);
-      this.setActiveKey(this.data[this.activeIndex].key);
-      this.setActivePath(parseData);
+      let parsePath = JSON.parse(storagePath);
+      this.setActiveIndex(parsePath[0]);
+      this.setActiveKey(storageKey);
+      this.setActivePath(parsePath);
     }
   },
 };
