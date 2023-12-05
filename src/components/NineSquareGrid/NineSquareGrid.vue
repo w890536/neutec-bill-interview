@@ -1,11 +1,14 @@
 <template>
   <div class="nine-square-grid">
+    <!-- flex-wrap -->
     <div class="nine-square-grid__flex-wrap">
+      <!-- 定位球用 -->
       <div
         class="nine-square-grid__flex-wrap__container"
         v-for="(value, index) in gridData"
         :key="index"
       >
+        <!-- 格子背景，跟球同層級因此不會閃爍到球-->
         <div
           class="nine-square-grid__flex-wrap__container__grid-cell"
           :class="{
@@ -13,6 +16,7 @@
               value === 1 || value === 3,
           }"
         />
+        <!-- 球 -->
         <div
           :id="`ball${index}`"
           v-if="value === 2 || value === 3"
@@ -40,7 +44,7 @@ export default {
       type: Number,
       default: null,
     },
-    basePosition: {
+    initPosition: {
       type: Array,
       default: () => [],
     },
@@ -63,8 +67,8 @@ export default {
         if (element && this.x && this.y) {
           // console.log("this.x", this.x);
           // console.log("this.y", this.y);
-          let translateY = this.y - this.basePosition[index].y;
-          let translateX = this.x - this.basePosition[index].x;
+          let translateY = this.y - this.initPosition[index].y;
+          let translateX = this.x - this.initPosition[index].x;
           this.keyframes[index] = [
             { transform: "translate(-50%, -50%)" },
             { transform: `translate(${translateX}px, ${translateY}px)` },
@@ -85,7 +89,7 @@ export default {
         let element = document.getElementById(`ball${index}`);
         if (element) {
           let rect = element.getBoundingClientRect();
-          this.basePosition[index] = { x: rect.left, y: rect.top };
+          this.initPosition[index] = { x: rect.left, y: rect.top };
           this.keyframes[index] = [
             { transform: "translate(-50%, -50%)" },
             { transform: "translate(250px, -50%)" },
